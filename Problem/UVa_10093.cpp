@@ -1,42 +1,46 @@
 #include <stdio.h>
 #include <string.h>
 
-int val(char c) {
-    if (c >= '0' && c <= '9') {
-        return c - '0';
-    }
-    if (c >= 'A' && c <= 'Z') {
-        return c - 'A' + 10;
-    } 
-    return c - 'a' + 36;
+int get_value(char c) {
+    if (c >= '0' && c <= '9') return c - '0';
+    if (c >= 'A' && c <= 'Z') return c - 'A' + 10;
+    if (c >= 'a' && c <= 'z') return c - 'a' + 36;
+    return -1;
 }
 
 int main() {
-    char s[100];
+    char s[10005];
 
     while (scanf("%s", s) == 1) {
+        long long sum = 0;
+        int max_digit = 0;
 
-        int len = strlen(s);
-        int maxv = 0;
-
-        for (int i = 0; i < len; i++) {
-            int v = val(s[i]);
-            if (v > maxv) {
-                maxv = v;
+        for (int i = 0; s[i] != '\0'; i++) {
+            int val = get_value(s[i]);
+            if (val != -1) {
+                sum += val;
+                if (val > max_digit) {
+                    max_digit = val;
+                }
             }
         }
 
-        int base = maxv + 1;
-        if (base < 2) {
-            base = 2;
+        int start_base = max_digit + 1;
+        if (start_base < 2) start_base = 2;
+
+        int found = 0;
+        for (int n = start_base; n <= 62; n++) {
+            if (sum % (n - 1) == 0) {
+                printf("%d\n", n);
+                found = 1;
+                break;
+            }
         }
 
-        long long ans = 0;
-
-        for (int i = 0; i < len; i++) {
-            ans = ans * base + val(s[i]);
+        if (!found) {
+            printf("such number is impossible!\n");
         }
-
-        printf("%d\n", base);
     }
+
+    return 0;
 }
