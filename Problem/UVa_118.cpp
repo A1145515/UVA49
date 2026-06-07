@@ -1,55 +1,69 @@
 #include <stdio.h>
 #include <string.h>
 
+int dx[4] = {0, 1, 0, -1};
+int dy[4] = {1, 0, -1, 0};
+
+int scent[55][55];
+
 int main() {
-    int maxX, maxY;
-    scanf("%d %d", &maxX, &maxY);
 
-    int scent[55][55][4] = {0};
+    int X, Y;
+    scanf("%d %d", &X, &Y);
 
-    char dirChar;
     int x, y;
-    char cmd[110];
+    char dir;
+    char cmd[105];
 
-    const char dirs[] = "NESW";
-    int dx[] = {0, 1, 0, -1};
-    int dy[] = {1, 0, -1, 0};
+    while (scanf("%d %d %c", &x, &y, &dir) == 3) {
 
-    while (scanf("%d %d %c", &x, &y, &dirChar) == 3) {
         scanf("%s", cmd);
 
-        int dir;
-        for (dir = 0; dir < 4; dir++)
-            if (dirs[dir] == dirChar)
-                break;
+        int d;
+        if (dir == 'N') d = 0;
+        else if (dir == 'E') d = 1;
+        else if (dir == 'S') d = 2;
+        else d = 3;
 
         int lost = 0;
 
-        for (int i = 0; cmd[i] && !lost; i++) {
+        for (int i = 0; cmd[i]; i++) {
+
             if (cmd[i] == 'L') {
-                dir = (dir + 3) % 4;
+                d = (d + 3) % 4;
             }
             else if (cmd[i] == 'R') {
-                dir = (dir + 1) % 4;
+                d = (d + 1) % 4;
             }
             else {
-                int nx = x + dx[dir];
-                int ny = y + dy[dir];
 
-                if (nx < 0 || nx > maxX || ny < 0 || ny > maxY) {
-                    if (scent[x][y][dir])
+                int nx = x + dx[d];
+                int ny = y + dy[d];
+
+                if (nx < 0 || nx > X || ny < 0 || ny > Y) {
+
+                    if (scent[x][y]) {
                         continue;
+                    }
 
-                    scent[x][y][dir] = 1;
+                    scent[x][y] = 1;
                     lost = 1;
-                } else {
-                    x = nx;
-                    y = ny;
+                    break;
                 }
+
+                x = nx;
+                y = ny;
             }
         }
 
-        printf("%d %d %c", x, y, dirs[dir]);
+        char outDir;
+        if (d == 0) outDir = 'N';
+        else if (d == 1) outDir = 'E';
+        else if (d == 2) outDir = 'S';
+        else outDir = 'W';
+
+        printf("%d %d %c", x, y, outDir);
+
         if (lost) printf(" LOST");
         printf("\n");
     }
