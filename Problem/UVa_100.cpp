@@ -30,5 +30,4 @@ int main(){
         }
         printf("%d %d %lld\n", i, j, ans);
     }
-    return 0;
 }
