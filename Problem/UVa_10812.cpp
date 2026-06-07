@@ -1,27 +1,23 @@
 #include <stdio.h>
 
 int main() {
-    int T;
-    scanf("%d", &T);
 
-    while (T--) {
+    int n;
+    scanf("%d", &n);
 
-        int sum, diff;
-        scanf("%d %d", &sum, &diff);
+    while (n--) {
 
-        if (sum < diff || (sum + diff) % 2 != 0) {
-            printf("NO\n");
+        long long s, d;
+        scanf("%lld %lld", &s, &d);
+
+        if (s < d || (s + d) % 2 != 0) {
+            printf("impossible\n");
             continue;
         }
 
-        int x = (sum + diff) / 2;
-        int y = sum - x;
+        long long x = (s + d) / 2;
+        long long y = (s - d) / 2;
 
-        if (y < 0) {
-            printf("NO\n");
-        }
-        else {
-            printf("%d %d\n", x, y);
-        }
+        printf("%lld %lld\n", x, y);
     }
 }

@@ -2,30 +2,25 @@
 #include <string.h>
 
 int main() {
-    char s[1000];
+
+    char s[1005];
 
     while (scanf("%s", s) == 1) {
 
-        if (s[0] == '0') {
+        if (s[0] == '0' && s[1] == '\0') {
             break;
         }
 
-        int odd = 0, even = 0;
+        int sign = 1;
+        int sum = 0;
 
         for (int i = 0; s[i]; i++) {
-            int d = s[i] - '0';
 
-            if (i % 2 == 0) {
-                odd += d;
-            }
-            else {
-                even += d;
-            }
+            sum += sign * (s[i] - '0');
+            sign = -sign;
         }
 
-        int diff = odd - even;
-
-        if (diff % 11 == 0) {
+        if (sum % 11 == 0) {
             printf("%s is a multiple of 11.\n", s);
         }
         else {
