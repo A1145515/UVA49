@@ -1,34 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int cmp(const void *a, const void *b) {
-    return (*(int*)a - *(int*)b);
+int compare(const void *a, const void *b) {
+    return (*(int *)a - *(int *)b);
 }
+
+int arr[1000005];
 
 int main() {
     int n;
-    int a[100000];
 
     while (scanf("%d", &n) == 1) {
         for (int i = 0; i < n; i++) {
-            scanf("%d", &a[i]);
+            scanf("%d", &arr[i]);
         }
 
-        qsort(a, n, sizeof(int), cmp);
+        qsort(arr, n, sizeof(int), compare);
 
-        int L = a[(n - 1) / 2];
-        int R = a[n / 2];
+        int mid1 = arr[(n - 1) / 2];
+        int mid2 = arr[n / 2];
 
-        int cnt = R - L + 1;
-
-        int ways = 0;
-
+        int count = 0;
         for (int i = 0; i < n; i++) {
-            if (a[i] >= L && a[i] <= R) {
-                ways++;
+            if (arr[i] >= mid1 && arr[i] <= mid2) {
+                count++;
             }
         }
 
-        printf("%d %d %d\n", L, cnt, ways);
+        int possible_A_count = mid2 - mid1 + 1;
+
+        printf("%d %d %d\n", mid1, count, possible_A_count);
     }
 }

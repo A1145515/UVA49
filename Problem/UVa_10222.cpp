@@ -1,30 +1,33 @@
 #include <stdio.h>
-#include <string.h>
+#include <ctype.h>
 
 int main() {
+    char map[256] = {0};
 
-    char a[] = "`1234567890-="
-                 "QWERTYUIOP[]\\"
-                 "ASDFGHJKL;'"
-                 "ZXCVBNM,./";
+    map['2'] = '`'; map['3'] = '1'; map['4'] = '2'; map['5'] = '3';
+    map['6'] = '4'; map['7'] = '5'; map['8'] = '6'; map['9'] = '7';
+    map['0'] = '8'; map['-'] = '9'; map['='] = '0';
 
-    char line[10000];
+    map['e'] = 'q'; map['r'] = 'w'; map['t'] = 'e'; map['y'] = 'r';
+    map['u'] = 't'; map['i'] = 'y'; map['o'] = 'u'; map['p'] = 'i';
+    map['['] = 'o'; map[']'] = 'p'; map['\\'] = '[';
 
-    while (fgets(line, sizeof(line), stdin)) {
+    map['d'] = 'a'; map['f'] = 's'; map['g'] = 'd'; map['h'] = 'f';
+    map['j'] = 'g'; map['k'] = 'h'; map['l'] = 'j'; map[';'] = 'k';
+    map['\''] = 'l';
 
-        for (int i = 0; line[i]; i++) {
+    map['c'] = 'z'; map['v'] = 'x'; map['b'] = 'c'; map['n'] = 'v';
+    map['m'] = 'b'; map[','] = 'n'; map['.'] = 'm'; map['/'] = ',';
 
-            if (line[i] == ' ' || line[i] == '\n') {
-                putchar(line[i]);
-                continue;
-            }
-
-            for (int j = 0; a[j]; j++) {
-                if (a[j] == line[i]) {
-                    putchar(a[j - 1]);
-                    break;
-                }
-            }
+    int ch;
+    while ((ch = getchar()) != EOF) {
+        ch = tolower(ch);
+        if (map[ch] != 0) {
+            putchar(map[ch]);
+        } else {
+            putchar(ch);
         }
     }
+
+    return 0;
 }
