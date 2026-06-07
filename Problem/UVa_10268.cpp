@@ -1,28 +1,29 @@
 #include <stdio.h>
 
+long long a[1000005];
+
 int main() {
     long long x;
 
     while (scanf("%lld", &x) == 1) {
-
-        long long coef[10000];
         int n = 0;
+        char ch;
 
-        while (scanf("%lld", &coef[n]) == 1) {
+        while (1) {
+            scanf("%lld%c", &a[n], &ch);
             n++;
-            if (getchar() == '\n') {
+            if (ch == '\n') {
                 break;
             }
         }
 
-        long long val = 0;
-        long long der = 0;
+        n--; 
 
+        long long sum = 0;
         for (int i = 0; i < n; i++) {
-            der = der * x + val;
-            val = val * x + coef[i];
+            sum = sum * x + a[i] * (n - i);
         }
 
-        printf("%lld\n", der);
+        printf("%lld\n", sum);
     }
 }

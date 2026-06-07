@@ -1,50 +1,41 @@
 #include <stdio.h>
 
-long long a[105][105];
+long long vec[10005];
 
 int main() {
+    int t;
+    if (scanf("%d", &t) != 1) return 0;
 
-    int T;
-    scanf("%d", &T);
-
-    for (int tc = 1; tc <= T; tc++) {
-
-        char dummy[10];
-        scanf("%s %s %s", dummy, dummy, dummy);
-
+    for (int case_num = 1; case_num <= t; case_num++) {
+        char t1, t2;
         int n;
-        scanf("%d", &n);
+        
+        scanf(" %c %c %d", &t1, &t2, &n);
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                scanf("%lld", &a[i][j]);
-            }
-        }
+        int total = n * n;
+        int flag = 1;
 
-        int ok = 1;
-
-        for (int i = 0; i < n && ok; i++) {
-            for (int j = 0; j < n; j++) {
-
-                if (a[i][j] < 0) {
-                    ok = 0;
-                    break;
-                }
-
-                if (a[i][j] != a[n - 1 - i][n - 1 - j]) {
-                    ok = 0;
-                    break;
+        if (n < 0) {
+            flag = 0;
+        } else {
+            for (int i = 0; i < total; i++) {
+                scanf("%lld", &vec[i]);
+                if (vec[i] < 0) {
+                    flag = 0;
                 }
             }
         }
 
-        printf("Test #%d: ", tc);
-
-        if (ok) {
-            printf("Symmetric.\n");
+        for (int i = 0; i < total / 2 && flag; i++) {
+            if (vec[i] != vec[total - 1 - i]) {
+                flag = 0;
+            }
         }
-        else {
-            printf("Non-symmetric.\n");
+
+        if (flag) {
+            printf("Test #%d: Symmetric.\n", case_num);
+        } else {
+            printf("Test #%d: Non-symmetric.\n", case_num);
         }
     }
 }
